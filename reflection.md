@@ -14,9 +14,11 @@ Document at least 3 bugs you found. Add rows as needed.
 
 | Input | Expected Behavior | Actual Behavior | Console Output / Error |
 |-------|-------------------|-----------------|------------------------|
-| | | | |
-| | | | |
-| | | | |
+| Secret 50, guess 60 (any attempt) | "Too High" with hint "Go LOWER!" | Hint says "Go HIGHER!" and the Too Low hint says "Go LOWER!" (hints are swapped) | None (silent logic bug) |
+| Secret 50, guess 50 on an even-numbered attempt (2nd, 4th, ...) | "Win" | `app.py` converts the secret to a string on even attempts, so `check_guess` falls back to string comparison; 50 vs "50" never wins, and guess 9 vs "50" reports Too High because "9" > "50" as text | No exception; `TypeError` is swallowed by `except TypeError` in `check_guess` |
+| Click "New Game" after a finished game, or switch difficulty | Fresh game: new secret in the selected range, score/history/status reset | Secret always drawn from 1-100, status stays "won"/"lost" so the game stays locked, score and history persist, attempts reset to 0 while a new session starts at 1 | None; "You already won. Start a new game" message keeps showing |
+| Any game | "Attempts left" matches the limit shown in the sidebar | `attempts` starts at 1, so the banner shows one fewer attempt than allowed; banner text always says "1 and 100" even on Easy (1-20) | None |
+| Wrong guess on Easy/Normal/Hard | Score drops by a fixed 5 for a wrong guess | "Too High" on an even attempt adds 5 points instead of subtracting; winning score uses `attempt_number + 1`, penalizing the player an extra attempt | None |
 
 ---
 
