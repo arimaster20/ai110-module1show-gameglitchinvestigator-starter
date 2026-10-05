@@ -33,12 +33,11 @@ It wrote the code, ran away, and now the game is unplayable.
 - "New Game" ignored the difficulty range and left status, score, and history untouched, so a finished game stayed locked.
 - Attempts started at 1, so "Attempts left" was off by one; the banner always said 1-100.
 - Scoring was inconsistent (Too High added 5 points on even attempts; wins used `attempt + 1`).
-- Hard (1-50) was easier than Normal (1-100).
 
 **Fixes applied.**
 - Moved `get_range_for_difficulty`, `parse_guess`, `check_guess`, and `update_score` into `logic_utils.py`; `app.py` now only handles the UI.
 - Corrected hint messages, removed the string-cast and the `TypeError` fallback, and made every wrong guess cost 5 points.
-- Added a `reset_game()` helper used by New Game and by difficulty changes; Hard is now 1-200; attempts start at 0.
+- Added a `reset_game()` helper used by New Game and by difficulty changes; attempts start at 0.
 - Added pytest regression tests in `tests/test_game_logic.py`.
 
 ## 📸 Demo Walkthrough

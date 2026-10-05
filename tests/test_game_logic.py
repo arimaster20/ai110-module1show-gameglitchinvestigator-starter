@@ -59,5 +59,4 @@ def test_win_score_and_floor():
 def test_difficulty_ranges():
     assert get_range_for_difficulty("Easy") == (1, 20)
     assert get_range_for_difficulty("Normal") == (1, 100)
-    low, high = get_range_for_difficulty("Hard")
-    assert high > get_range_for_difficulty("Normal")[1]
+    assert get_range_for_difficulty("Hard") == (1, 50)

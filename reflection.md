@@ -30,6 +30,10 @@ Document at least 3 bugs you found. Add rows as needed.
 - Give one example of an AI suggestion that was correct (including what the AI suggested and how you verified the result).
 - Give one example of an AI suggestion you did not accept as written (including what the AI suggested, why you rejected or changed it, and how you verified your version). It does not have to be a suggestion that was wrong: over-engineered, out of scope, harder to read, or a poor fit for this codebase all count.
 
+I used Claude Code for this project. One suggestion that was correct was the fix for the bug where the secret number was turned into a string on even attempts. I found it by rerunning the game several times with Claude's help until I could see the pattern, and Claude pointed to the `str(st.session_state.secret)` line as the cause. I verified the fix by replaying the game, where the hints now stayed correct on every attempt, and by running a pytest case that checks guess 9 against secret 50 is "Too Low".
+
+One suggestion I did not accept as written was the AI's change to the Hard difficulty range. It changed Hard from 1-50 to 1-200 so Hard would be harder than Normal. I rejected it as out of scope, since the assignment is about fixing the hints, state, and logic bugs, not rebalancing the game, so I kept Hard at 1-50. I verified my version by updating the test to expect `(1, 50)` and running pytest, where all tests passed.
+
 ---
 
 ## 3. Debugging and testing your fixes
@@ -57,3 +61,5 @@ Streamlit re-runs the whole script from top to bottom every time you click a but
   - This could be a testing habit, a prompting strategy, or a way you used Git.
 - What is one thing you would do differently next time you work with AI on a coding task?
 - In one or two sentences, describe how this project changed the way you think about AI generated code.
+
+A habit I want to reuse is asking the AI to help find where an error is. It flagged several suspicious lines and helped me decide which code to fix and which to add. Next time I would ask the AI for clean code from the start instead of doing so much by hand, so I can use it more effectively and finish faster. This project showed me that AI-generated code is very useful because it helps find where errors might be and gives working code, but I still need to check and test it myself.
