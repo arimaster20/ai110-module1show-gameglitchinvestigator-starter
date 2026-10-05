@@ -8,6 +8,8 @@ Answer each question in 3 to 5 sentences. Be specific and honest about what actu
 - List at least two concrete bugs you noticed at the start  
   (for example: "the hints were backwards").
 
+The game loaded fine, but it was effectively unwinnable: the hints pointed the wrong way, and every second guess was compared against a string version of the secret, so it gave wrong answers or could never match. New Game also left the old state in place and ignored the difficulty range. The bug table below lists five concrete bugs with inputs and results.
+
 **Bug Reproduction Log**
 
 Document at least 3 bugs you found. Add rows as needed.
@@ -37,11 +39,15 @@ Document at least 3 bugs you found. Add rows as needed.
   and what it showed you about your code.
 - Did AI help you design or understand any tests? How?
 
+I treated a bug as fixed only when a test that failed before the fix passed after it, and then confirmed it in the running app. For example, `test_numeric_comparison_not_string` checks that guess 9 against secret 50 is "Too Low"; with the old string cast it was "Too High" because "9" > "50" as text. I also drove the Streamlit app with Streamlit's `AppTest` to play a short game and check hints, score, and New Game reset. The AI suggested which regression cases to write, and I checked each one against the bug it was meant to catch. The starter tests also expected `check_guess` to return a bare string even though its docstring says it returns a tuple, so I updated the tests to unpack `(outcome, message)`.
+
 ---
 
 ## 4. What did you learn about Streamlit and state?
 
 - How would you explain Streamlit "reruns" and session state to a friend who has never used Streamlit?
+
+Streamlit re-runs the whole script from top to bottom every time you click a button or change an input, so ordinary variables are reset on every click. `st.session_state` is a dictionary that survives those reruns, so anything that must persist (the secret number, attempts, score) lives there and is only initialized when it is missing or when a new game starts.
 
 ---
 
